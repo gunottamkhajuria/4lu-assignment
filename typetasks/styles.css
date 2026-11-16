@@ -1,7 +1,131 @@
 /* styles.css */
-.wrap { max-width: 600px; margin: 0 auto; padding: 16px; }
-.addrow { display: flex; gap: 8px; }
-#add { background: #7c5cff; color: #fff; border: none;
-       border-radius: 9px; padding: 9px 16px; cursor: pointer; }
-li.task { display: flex; align-items: center; gap: 9px;
-          border: 1px solid #e2e6f0; border-radius: 11px; padding: 10px; }
+:root {
+  color-scheme: light;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: #f4f5fb;
+  margin: 0;
+  color: #22263a;
+}
+h1 {
+  font-size: 1.4rem;
+  margin: 8px 0 16px;
+}
+
+.wrap {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 16px;
+}
+.addrow {
+  display: flex;
+  gap: 8px;
+}
+
+#title {
+  flex: 1;
+  padding: 9px 12px;
+  border: 1px solid #d8dce8;
+  border-radius: 9px;
+  font-size: 1rem;
+}
+#status {
+  padding: 9px 10px;
+  border: 1px solid #d8dce8;
+  border-radius: 9px;
+  font-size: 0.95rem;
+  background: #fff;
+}
+#add {
+  background: #7c5cff;
+  color: #fff;
+  border: none;
+  border-radius: 9px;
+  padding: 9px 16px;
+  cursor: pointer;
+}
+#add:hover {
+  background: #6a4ae0;
+}
+
+#chips {
+  display: flex;
+  gap: 8px;
+  margin: 14px 0;
+}
+#chips button {
+  padding: 6px 14px;
+  border: 1px solid #d8dce8;
+  border-radius: 999px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+#chips button.active {
+  background: #22263a;
+  color: #fff;
+  border-color: #22263a;
+}
+
+#list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+li.task {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid #e2e6f0;
+  border-radius: 11px;
+  padding: 10px;
+  background: #fff;
+}
+li.task .label {
+  flex: 1;
+}
+li.task.done .label {
+  text-decoration: line-through;
+  color: #9aa0b5;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 3px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.badge.todo {
+  background: #eef0f6;
+  color: #5a6072;
+}
+.badge.in-progress {
+  background: #fff3d6;
+  color: #a2700a;
+}
+.badge.done {
+  background: #e0f5e6;
+  color: #1d7a3a;
+}
+
+button.advance {
+  border: none;
+  background: #7c5cff;
+  color: #fff;
+  border-radius: 8px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+}
+button.advance:hover {
+  background: #6a4ae0;
+}

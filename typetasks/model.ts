@@ -9,15 +9,27 @@ export interface Task {
 }
 let nextId = 1;
 
-// Add a new task — always starts as "todo".
-export function addTask(tasks: Task[], title: string): Task[] {
-  const newTask: Task = { id: nextId++, title, status: "todo" };
+// Add a new task with a chosen starting status.
+export function addTask(tasks: Task[], title: string, status: TaskStatus = "todo"): Task[] {
+  const newTask: Task = { id: nextId++, title, status };
   return [...tasks, newTask];
 }
 
-// Mark a task done by id.
-export function completeTask(tasks: Task[], id: number): Task[] {
-  return tasks.map((t) => (t.id === id ? { ...t, status: "done" } : t));
+// Advance a task to the next status: todo → in-progress → done.
+export const NEXT_STATUS: Record<TaskStatus, TaskStatus> = {
+  "todo": "in-progress",
+  "in-progress": "done",
+  "done": "todo",
+};
+
+// Set a task's status by id.
+export function setStatus(tasks: Task[], id: number, status: TaskStatus): Task[] {
+  return tasks.map((t) => (t.id === id ? { ...t, status } : t));
+}
+
+// Advance a task by one step (cycles back to todo after done).
+export function advanceTask(tasks: Task[], id: number): Task[] {
+  return tasks.map((t) => (t.id === id ? { ...t, status: NEXT_STATUS[t.status] } : t));
 }
 
 // Return only the tasks matching a given status.

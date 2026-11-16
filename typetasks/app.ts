@@ -1,5 +1,5 @@
 // app.ts
-import { addTask, completeTask, filterByStatus } from "./model.js";
+import { addTask, advanceTask, filterByStatus } from "./model.js";
 import type { Task, TaskStatus } from "./model.js";
 let tasks: Task[] = [];
 let filter: "all" | TaskStatus = "all";
@@ -9,11 +9,13 @@ const titleInput = document.getElementById("title") as HTMLInputElement;
 const addBtn = document.getElementById("add") as HTMLButtonElement;
 const listEl = document.getElementById("list") as HTMLUListElement;
 const chipsEl = document.getElementById("chips") as HTMLDivElement;
+const statusSelect = document.getElementById("status") as HTMLSelectElement;
 
 addBtn.onclick = () => {
   const title = titleInput.value.trim();   // .value is known & typed
   if (!title) return;
-  tasks = addTask(tasks, title);           // returns a fresh Task[]
+  const status = statusSelect.value as TaskStatus;  // use the dropdown
+  tasks = addTask(tasks, title, status);           // returns a fresh Task[]
   titleInput.value = "";
   render();
 };
@@ -38,12 +40,22 @@ function render(): void {
   listEl.innerHTML = "";
   for (const task of visible) {
     const li = document.createElement("li");
-    li.textContent = `${task.title} — ${task.status}`;
-    if (task.status === "done") li.classList.add("done");
-    li.onclick = () => {
-      tasks = completeTask(tasks, task.id);
+    li.className = `task ${task.status}`;
+    const label = document.createElement("span");
+    label.textContent = task.title;
+    const badge = document.createElement("span");
+    badge.className = "badge";
+    badge.textContent = task.status;
+    const nextBtn = document.createElement("button");
+    nextBtn.className = "advance";
+    nextBtn.textContent = "→";
+    nextBtn.title = "Advance status";
+    nextBtn.onclick = (e) => {
+      e.stopPropagation();
+      tasks = advanceTask(tasks, task.id);
       render();
     };
+    li.append(label, badge, nextBtn);
     listEl.appendChild(li);
   }
 }
